@@ -5,7 +5,7 @@ Blank white launcher window (EGL_BAD_PARAMETER) – caused by bundled libwayland
 Play does nothing / umu-run crashes – the launcher leaks its AppImage environment into umu-run
 Game install/download fails – the game installs inside the read-only AppImage
 Install
-curl -LO https://gist.githubusercontent.com/arild668/3be8259b93b5d1c1a2570e79216a9efd/raw/install-mnm-linux.sh
+curl -LO https://raw.githubusercontent.com/arild668/mnm-linux-fix/main/install-mnm-linux.sh
 bash install-mnm-linux.sh ~/Downloads/MonstersAndMemories_amd64.appimage
 Change ~/Downloads/... if your AppImage is somewhere else.
 
