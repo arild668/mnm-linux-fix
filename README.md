@@ -10,6 +10,8 @@ Unofficial script that fixes common problems with the Monsters & Memories Linux 
 
 ## Install
 
+First, download the **Linux AppImage** (`MonstersAndMemories_amd64.appimage`) from the official Monsters & Memories website. You don't need to make it executable – the script does that for you.
+
 Open a terminal and run:
 
 ```bash
