@@ -38,7 +38,7 @@ Download the new AppImage and run the script again. Your game files are kept.
 
 1. In Steam: **Add a Game → Add a Non-Steam Game → Browse**
 2. Pick `~/Games/MnM/start-mnm.sh` (switch the file type to "All files" if it isn't listed)
-3. In **Properties → Compatibility**, make sure Proton is **off**. The launcher is a native Linux app.
+3. In **Properties → Compatibility**, leave it on **Default**. Don't select a Proton version – the launcher is a native Linux app. If the launcher doesn't start from Steam, check that no Proton version is selected.
 
 ## Requirements
 
