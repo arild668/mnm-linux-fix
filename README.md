@@ -12,14 +12,14 @@ Unofficial script that fixes common problems with the Monsters & Memories Linux 
 
 First, download the **Linux AppImage** (`MonstersAndMemories_amd64.appimage`) from the official Monsters & Memories website. You don't need to make it executable – the script does that for you.
 
-Open a terminal and run:
+Then open a terminal and run:
 
 ```bash
 curl -LO https://raw.githubusercontent.com/arild668/mnm-linux-fix/main/install-mnm-linux.sh
 bash install-mnm-linux.sh ~/Downloads/MonstersAndMemories_amd64.appimage
 ```
 
-Change `~/Downloads/...` if your AppImage is somewhere else.
+Change `~/Downloads/...` if your AppImage is somewhere else (e.g. `~/Hämtningar` on a Swedish system). You can also leave the path out – the script looks in your Downloads folder by itself.
 
 Then start **Monsters & Memories** from your app menu.
 
@@ -40,6 +40,39 @@ Download the new AppImage and run the script again. Your game files are kept.
 2. Pick `~/Games/MnM/start-mnm.sh` (switch the file type to "All files" if it isn't listed)
 3. In **Properties → Compatibility**, leave it on **Default**. Don't select a Proton version – the launcher is a native Linux app. If the launcher doesn't start from Steam, check that no Proton version is selected.
 
+Note: only the launcher runs natively. When you press Play, the launcher runs the game itself through GE-Proton (downloaded automatically by umu).
+
+## Troubleshooting
+
+### Black screen after pressing Play
+
+The game starts in fullscreen, shows a white window, then a black window, and nothing happens. The game's log (`Player.log`) shows errors like `NullReferenceException ... TMP_Settings.get_defaultStyleSheet`.
+
+This means the game files don't match the current version. Common causes:
+
+- **More than one installation.** All installations share the same launcher settings and version database, so the launcher may think the game is up to date while starting old game files from another folder. Keep only one installation (e.g. `~/Games/MnM`), remove the others, and make sure your Steam shortcut points to the right `start-mnm.sh`.
+- **An incomplete update.** Force a fresh game install by moving the game folder away and starting the launcher again – it will show **Install** and download the game:
+
+  ```bash
+  mv ~/Games/MnM/squashfs-root/usr/bin/mnm ~/Games/MnM/mnm-old
+  ```
+
+  When everything works, you can delete `~/Games/MnM/mnm-old`.
+
+To read the game's log:
+
+```bash
+find ~/.local/share/mnm -name "Player.log" -exec tail -n 40 {} \;
+```
+
+### Closing the game
+
+Quit from inside the game rather than using Steam's **Stop** button. Stop kills everything immediately, which can leave files half-written. If the game hangs, you can close just the game with:
+
+```bash
+pkill -f mnm.exe
+```
+
 ## Requirements
 
 `umu-launcher` must be installed.
@@ -50,7 +83,7 @@ Download the new AppImage and run the script again. Your game files are kept.
 
 ## Tested on
 
-- Bazzite (Fedora 44), AMD Radeon
+- Bazzite (Fedora 43), AMD Radeon
 
 Tried it on another distro? Open an issue and tell me whether it worked!
 
