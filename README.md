@@ -83,7 +83,7 @@ pkill -f mnm.exe
 
 ## Tested on
 
-- Bazzite (Fedora 43), AMD Radeon
+- Bazzite (Fedora 44), AMD Radeon
 
 Tried it on another distro? Open an issue and tell me whether it worked!
 
