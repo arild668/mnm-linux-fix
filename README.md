@@ -88,5 +88,9 @@ pkill -f mnm.exe
 Tried it on another distro? Open an issue and tell me whether it worked!
 
 ---
+## License
 
+MIT – feel free to use, modify and share.
+
+---
 *Not affiliated with the Monsters & Memories developers.*
