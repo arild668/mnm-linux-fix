@@ -5,7 +5,7 @@ Unofficial script that fixes common problems with the Monsters & Memories Linux 
 | Problem | Cause |
 |---|---|
 | Blank white launcher window (`EGL_BAD_PARAMETER`) | Bundled `libwayland` libraries conflict with newer systems |
-| Play does nothing / umu-run crashes | The launcher leaks its AppImage environment into umu-run |
+| Play does nothing / umu-run crashes | The AppImage leaks its environment into umu-run |
 | Game download or install fails | The game installs inside the read-only AppImage |
 
 ## Install
@@ -25,14 +25,29 @@ Then start **Monsters & Memories** from your app menu.
 
 ## What the script does
 
-1. Extracts the AppImage to `~/Games/MnM`
+The script picks one of two modes automatically:
+
+**Native mode** (used when your system has the libraries the launcher needs):
+
+1. Extracts only the launcher program (`mnm_launcher`) to `~/Games/MnM`
+2. The launcher then runs with your system's own libraries instead of the bundled ones, which avoids all three problems above – no wrapper needed
+3. The game is installed in `~/Games/MnM/mnm`
+
+Requires WebKitGTK 4.1, GTK3 and libsoup3 – most desktop distros, including Bazzite, already have them.
+
+**Full mode** (fallback when those libraries are missing):
+
+1. Extracts the whole AppImage to `~/Games/MnM/squashfs-root`
 2. Removes the bundled `libwayland-*` libraries
 3. Creates a wrapper at `~/.local/bin/umu-run` that gives umu-run a clean environment
-4. Creates a start script and an app menu entry
+4. The game is installed in `~/Games/MnM/squashfs-root/usr/bin/mnm`
 
-## Updating the launcher
+Both modes create a start script (`~/Games/MnM/start-mnm.sh`) and an app menu entry. To force full mode, run the script with `MNM_MODE=full`.
 
-Download the new AppImage and run the script again. Your game files are kept.
+## Updating
+
+- **Game patches:** just press **Update** in the launcher.
+- **New launcher version:** download the new AppImage and run the script again. Your game files are kept, also when switching between modes.
 
 ## Adding to Steam (optional)
 
@@ -54,6 +69,9 @@ This means the game files don't match the current version. Common causes:
 - **An incomplete update.** Force a fresh game install by moving the game folder away and starting the launcher again – it will show **Install** and download the game:
 
   ```bash
+  # native mode
+  mv ~/Games/MnM/mnm ~/Games/MnM/mnm-old
+  # full mode
   mv ~/Games/MnM/squashfs-root/usr/bin/mnm ~/Games/MnM/mnm-old
   ```
 
@@ -83,14 +101,18 @@ pkill -f mnm.exe
 
 ## Tested on
 
-- Bazzite (Fedora 44), AMD Radeon
+- Bazzite (Fedora 44), AMD Radeon – native mode
 
 Tried it on another distro? Open an issue and tell me whether it worked!
 
----
+## Credits
+
+Native mode (running only the extracted launcher binary) was suggested by a player in the Monsters & Memories community – thanks!
+
 ## License
 
 MIT – feel free to use, modify and share.
 
 ---
+
 *Not affiliated with the Monsters & Memories developers.*
