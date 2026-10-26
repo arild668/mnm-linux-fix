@@ -101,7 +101,14 @@ print('Done')
 "
 ```
 
-Then start the launcher and sign in manually. This only clears the login – your game version info is kept, so the game won't reinstall. If something goes wrong, restore the backup with `cp launcher.db.backup launcher.db`.
+Then start the launcher and sign in manually. This only clears the login – your game version info is kept, so the game won't reinstall.
+
+If something goes wrong, restore the backup:
+
+```bash
+cd ~/.local/share/com.monstersandmemories.launcher
+cp launcher.db.backup launcher.db
+```
 
 ### Closing the game
 
