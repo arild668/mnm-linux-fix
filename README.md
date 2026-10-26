@@ -31,7 +31,7 @@ The script picks one of two modes automatically:
 **Native mode** (used when your system has the libraries the launcher needs):
 
 1. Extracts only the launcher program (`mnm_launcher`) to `~/Games/MnM`
-2. The launcher then runs with your system's own libraries instead of the bundled ones, which avoids all three problems above – no wrapper needed
+2. The launcher then runs with your system's own libraries instead of the bundled ones, which avoids all problems above – no wrapper needed
 3. The game is installed in `~/Games/MnM/mnm`
 
 Requires WebKitGTK 4.1, GTK3 and libsoup3 – most desktop distros, including Bazzite, already have them.
@@ -144,5 +144,4 @@ MIT – feel free to use, modify and share.
 ---
 
 *Not affiliated with the Monsters & Memories developers.*
-*Use at your own risk. The script only runs the official launcher unmodified and never handles your login.*
-
+*Use at your own risk. In native mode, the script runs the official launcher unmodified. It never asks for or stores your login.*
