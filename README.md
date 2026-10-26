@@ -144,4 +144,6 @@ MIT – feel free to use, modify and share.
 ---
 
 *Not affiliated with the Monsters & Memories developers.*
-*Use at your own risk. In native mode, the script runs the official launcher unmodified. It never asks for or stores your login.*
+*Use at your own risk.
+In native mode, the script runs the official launcher unmodified.
+It never asks for or stores your login.*
