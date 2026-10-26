@@ -83,6 +83,26 @@ To read the game's log:
 find ~/.local/share/mnm -name "Player.log" -exec tail -n 40 {} \;
 ```
 
+### "Session expired or was revoked. Please sign in again."
+
+If auto-login is enabled, the launcher keeps reusing an expired login, so you never get a chance to sign in again. Clear the saved login (a backup of the settings file is made first):
+
+```bash
+pkill -f mnm_launcher
+cd ~/.local/share/com.monstersandmemories.launcher
+cp launcher.db launcher.db.backup
+python3 -c "
+import sqlite3
+c = sqlite3.connect('launcher.db')
+c.execute(\"UPDATE settings SET value='' WHERE variable='token'\")
+c.execute(\"UPDATE settings SET value='false' WHERE variable IN ('remember','autologin','auto_login')\")
+c.commit()
+print('Done')
+"
+```
+
+Then start the launcher and sign in manually. This only clears the login – your game version info is kept, so the game won't reinstall. If something goes wrong, restore the backup with `cp launcher.db.backup launcher.db`.
+
 ### Closing the game
 
 Quit from inside the game rather than using Steam's **Stop** button. Stop kills everything immediately, which can leave files half-written. If the game hangs, you can close just the game with:
