@@ -6,6 +6,7 @@ Unofficial script that fixes common problems with the Monsters & Memories Linux 
 |---|---|
 | Blank white launcher window (`EGL_BAD_PARAMETER`) | Bundled `libwayland` libraries conflict with newer systems |
 | Play does nothing / umu-run crashes | The AppImage leaks its environment into umu-run |
+| Links in the launcher don't open the browser | Same leaked AppImage environment (fixed in native mode) |
 | Game download or install fails | The game installs inside the read-only AppImage |
 
 ## Install
