@@ -143,3 +143,5 @@ MIT – feel free to use, modify and share.
 ---
 
 *Not affiliated with the Monsters & Memories developers.*
+*Use at your own risk. The script only runs the official launcher unmodified and never handles your login.*
+
