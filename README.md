@@ -111,6 +111,15 @@ cd ~/.local/share/com.monstersandmemories.launcher
 cp launcher.db.backup launcher.db
 ```
 
+### Repair keeps failing with "Assembled file hash mismatch"
+
+If Repair fails on the same file with the exact same wrong hash every time, check your system for disk or memory problems. This can be caused by data corruption on your PC, not the download:
+
+```bash
+sudo dmesg | grep -i -E "csum failed|i/o error|corrupt" | tail -n 20
+```
+
+Errors here (e.g. `BTRFS warning ... csum failed`) mean data on your drive is getting corrupted. Back up your files and check the drive (`sudo smartctl -a /dev/nvme0n1`) and RAM (memtest86+).
 ### Closing the game
 
 Quit from inside the game rather than using Steam's **Stop** button. Stop kills everything immediately, which can leave files half-written. If the game hangs, you can close just the game with:
