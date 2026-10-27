@@ -120,6 +120,25 @@ sudo dmesg | grep -i -E "csum failed|i/o error|corrupt" | tail -n 20
 ```
 
 Errors here (e.g. `BTRFS warning ... csum failed`) mean data on your drive is getting corrupted. Back up your files and check the drive (`sudo smartctl -a /dev/nvme0n1`) and RAM (memtest86+).
+
+
+### Launcher crashes with "Error 71 (Protocol error) dispatching to Wayland display"
+
+A known WebKitGTK issue on Wayland with some GPU/driver combinations. The start script already sets `WEBKIT_DISABLE_DMABUF_RENDERER=1`, which fixes it in most cases. If you start the launcher some other way, add it yourself:
+
+```bash
+WEBKIT_DISABLE_DMABUF_RENDERER=1 ./mnm_launcher
+```
+
+In Steam, put it in the launch options:
+
+```
+WEBKIT_DISABLE_DMABUF_RENDERER=1 %command%
+```
+
+If it still crashes, try `GDK_BACKEND=x11` instead, or with NVIDIA, add `__NV_DISABLE_EXPLICIT_SYNC=1`.
+
+
 ### Closing the game
 
 Quit from inside the game rather than using Steam's **Stop** button. Stop kills everything immediately, which can leave files half-written. If the game hangs, you can close just the game with:
