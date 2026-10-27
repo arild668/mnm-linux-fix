@@ -31,7 +31,7 @@ The script picks one of two modes automatically:
 **Native mode** (used when your system has the libraries the launcher needs):
 
 1. Extracts only the launcher program (`mnm_launcher`) to `~/Games/MnM`
-2. The launcher then runs with your system's own libraries instead of the bundled ones, which avoids all problems above – no wrapper needed
+2. The launcher then runs with your system's own libraries instead of the bundled ones, which avoids all the problems above – no wrapper needed
 3. The game is installed in `~/Games/MnM/mnm`
 
 Requires WebKitGTK 4.1, GTK3 and libsoup3 – most desktop distros, including Bazzite, already have them.
@@ -59,6 +59,23 @@ Both modes create a start script (`~/Games/MnM/start-mnm.sh`) and an app menu en
 Note: only the launcher runs natively. When you press Play, the launcher runs the game itself through GE-Proton (downloaded automatically by umu).
 
 ## Troubleshooting
+
+### Launcher crashes with "Error 71 (Protocol error) dispatching to Wayland display"
+
+A known WebKitGTK issue on Wayland with some GPU/driver combinations. The start script already sets `WEBKIT_DISABLE_DMABUF_RENDERER=1`, which fixes it in most cases. If you start the launcher some other way, add it yourself:
+
+```bash
+WEBKIT_DISABLE_DMABUF_RENDERER=1 ./mnm_launcher
+```
+
+In Steam, put it in the launch options:
+
+```
+WEBKIT_DISABLE_DMABUF_RENDERER=1 %command%
+```
+
+If it still crashes, try `GDK_BACKEND=x11` instead, or with NVIDIA, add `__NV_DISABLE_EXPLICIT_SYNC=1`.
+
 
 ### Black screen after pressing Play
 
@@ -113,30 +130,13 @@ cp launcher.db.backup launcher.db
 
 ### Repair keeps failing with "Assembled file hash mismatch"
 
-If Repair fails on the same file with the exact same wrong hash every time, check your system for disk or memory problems. This can be caused by data corruption on your PC, not the download:
+If Repair fails on the same file with the exact same wrong hash every time, check your system for disk or memory problems. The cause is then usually data corruption on your PC, not the download itself:
 
 ```bash
 sudo dmesg | grep -i -E "csum failed|i/o error|corrupt" | tail -n 20
 ```
 
 Errors here (e.g. `BTRFS warning ... csum failed`) mean data on your drive is getting corrupted. Back up your files and check the drive (`sudo smartctl -a /dev/nvme0n1`) and RAM (memtest86+).
-
-
-### Launcher crashes with "Error 71 (Protocol error) dispatching to Wayland display"
-
-A known WebKitGTK issue on Wayland with some GPU/driver combinations. The start script already sets `WEBKIT_DISABLE_DMABUF_RENDERER=1`, which fixes it in most cases. If you start the launcher some other way, add it yourself:
-
-```bash
-WEBKIT_DISABLE_DMABUF_RENDERER=1 ./mnm_launcher
-```
-
-In Steam, put it in the launch options:
-
-```
-WEBKIT_DISABLE_DMABUF_RENDERER=1 %command%
-```
-
-If it still crashes, try `GDK_BACKEND=x11` instead, or with NVIDIA, add `__NV_DISABLE_EXPLICIT_SYNC=1`.
 
 
 ### Closing the game
