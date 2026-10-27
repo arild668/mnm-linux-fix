@@ -138,6 +138,9 @@ sudo dmesg | grep -i -E "csum failed|i/o error|corrupt" | tail -n 20
 
 Errors here (e.g. `BTRFS warning ... csum failed`) mean data on your drive is getting corrupted. Back up your files and check the drive (`sudo smartctl -a /dev/nvme0n1`) and RAM (memtest86+).
 
+### The Patch Notes tab does nothing
+
+Clicking **Patch Notes** in the launcher doesn't show anything. The cause is unknown – it seems to be a bug in the launcher itself, not something this script can fix. The game works as normal, and you can read the patch notes on the official Monsters & Memories website or Discord instead.
 
 ### Closing the game
 
