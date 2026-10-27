@@ -168,15 +168,20 @@ fi
 
 # --- 7. Start script ----------------------------------------------------------
 info "Creating start script..."
+# WEBKIT_DISABLE_DMABUF_RENDERER=1 avoids "Error 71 (Protocol error) dispatching
+# to Wayland display" and blank windows with some GPU/driver combinations.
+# Set it to 0 before starting if you want to turn it off.
 if [[ "$MODE" == "native" ]]; then
     cat > "$START_SCRIPT" <<EOF
 #!/bin/bash
+export WEBKIT_DISABLE_DMABUF_RENDERER="\${WEBKIT_DISABLE_DMABUF_RENDERER:-1}"
 cd "$WORK_DIR"
 exec $LAUNCH_CMD "\$@"
 EOF
 else
     cat > "$START_SCRIPT" <<EOF
 #!/bin/bash
+export WEBKIT_DISABLE_DMABUF_RENDERER="\${WEBKIT_DISABLE_DMABUF_RENDERER:-1}"
 export PATH="$WRAPPER_DIR:\$PATH"
 cd "$WORK_DIR"
 exec $LAUNCH_CMD "\$@"
