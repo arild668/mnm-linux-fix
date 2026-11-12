@@ -43,7 +43,13 @@ Requires WebKitGTK 4.1, GTK3 and libsoup3 – most desktop distros, including Ba
 3. Creates a wrapper at `~/.local/bin/umu-run` that gives umu-run a clean environment
 4. The game is installed in `~/Games/MnM/squashfs-root/usr/bin/mnm`
 
-Both modes create a start script (`~/Games/MnM/start-mnm.sh`) and an app menu entry. To force full mode, run the script with `MNM_MODE=full`.
+Both modes create a start script (`~/Games/MnM/start-mnm.sh`) and an app menu entry. To force full mode, run the script with `MNM_MODE=full`:
+
+```bash
+MNM_MODE=full bash install-mnm-linux.sh ~/Downloads/MonstersAndMemories_amd64.appimage
+```
+
+To go back to native mode, just run the script again without `MNM_MODE=full`. Your game files are kept either way.
 
 ## Updating
 
