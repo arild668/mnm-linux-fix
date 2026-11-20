@@ -64,6 +64,7 @@ To go back to native mode, just run the script again without `MNM_MODE=full`. Yo
 
 Note: only the launcher runs natively. When you press Play, the launcher runs the game itself through GE-Proton (downloaded automatically by umu).
 
+
 ## Troubleshooting
 
 ### Launcher crashes with "Error 71 (Protocol error) dispatching to Wayland display"
@@ -81,6 +82,7 @@ WEBKIT_DISABLE_DMABUF_RENDERER=1 %command%
 ```
 
 If it still crashes, try `GDK_BACKEND=x11` instead, or with NVIDIA, add `__NV_DISABLE_EXPLICIT_SYNC=1`.
+
 
 
 ### Black screen after pressing Play
@@ -105,6 +107,7 @@ To read the game's log:
 
 ```bash
 find ~/.local/share/mnm -name "Player.log" -exec tail -n 40 {} \;
+
 ```
 
 ### "Session expired or was revoked. Please sign in again."
@@ -133,6 +136,33 @@ If something goes wrong, restore the backup:
 cd ~/.local/share/com.monstersandmemories.launcher
 cp launcher.db.backup launcher.db
 ```
+
+
+### Nothing happens when pressing Enter at server select
+
+You get to server select, but pressing **Enter** does nothing. The game's log (`Player.log`) shows a `NullReferenceException` in `LiteNetLib.NetManager.Stop`.
+
+This happens when IPv6 is completely disabled in the kernel `ipv6.disable=1`. The game's networking code expects IPv6 support to exist, even if you never use it. Check with:
+
+```bash
+cat /proc/cmdline
+```
+
+If you see `ipv6.disable=1`, remove it from your boot settings. It's usually in `/etc/default/grub` or a file in `/etc/default/grub.d/`. To find it:
+
+```bash
+sudo grep -rn "ipv6.disable" /etc/default/
+```
+
+Remove it there, then run `sudo update-grub` (Debian/Ubuntu) and reboot.
+
+If you want to keep IPv6 off, you can disable it with sysctl instead. That keeps IPv6 support in the kernel, which should be all the game needs:
+
+```bash
+echo "net.ipv6.conf.all.disable_ipv6 = 1" | sudo tee /etc/sysctl.d/99-no-ipv6.conf
+sudo sysctl --system
+```
+
 
 ### Repair keeps failing with "Assembled file hash mismatch"
 
@@ -167,6 +197,7 @@ pkill -f mnm.exe
 ## Tested on
 
 - Bazzite (Fedora 44), AMD Radeon – native mode
+- Debian 13, kernel 6.12, game run through the official Linux launcher with umu-run / GE-Proton11-12.
 
 Tried it on another distro? Open an issue and tell me whether it worked!
 
