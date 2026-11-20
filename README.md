@@ -204,6 +204,7 @@ Tried it on another distro? Open an issue and tell me whether it worked!
 ## Credits
 
 Native mode (running only the extracted launcher binary) was suggested by a player in the Monsters & Memories community – thanks!
+The script and README were written with help from Google Translate - helped with the English.
 
 ## License
 
